@@ -1,38 +1,33 @@
-import sys
 import os
 from typing import TypeVar, Tuple
 
 
-base = 2
 max_round = 10
-
 ope = {
     2: bin,
     8: oct,
     16: hex
 }
-if base not in ope:
-    print('[-] wrong base provided.')
-    sys.exit()
 
 FloatPart = TypeVar('FloatPart')# str
 IntPart = TypeVar('IntPart', int, str)
 
 
-class Converter:
-    base=2
+class Convert:
+    def __init__(self, number:str):
+        self.n = number
 
-    def __new__(cls, number):
-        return
+        # for self.base, v in ope.items():
+        #     setattr(self, v.__name__, self.do())
 
     def operator(self, n)-> str:
-        return ope[base](int(n))[2:]
+        return ope[self.base](int(n))[2:]
 
     def positional_mul(self, number:FloatPart)-> Tuple[IntPart, FloatPart]:
         # assert isinstance(number, str)
 
         pre_len = len(number)
-        number = str(int(number)*base)
+        number = str(int(number)*self.base)
         number.rstrip('0')
         cur_len = len(number)
 
@@ -58,12 +53,21 @@ class Converter:
 
         return res
 
-    def dec_to_bin(self, n:str) -> str:
-        if '.' not in n:# non-floating point
-            return self.operator(n)
+    def do(self, base) -> str:
+        self.base = base 
+
+        if '.' not in self.n:# non-floating point
+            return self.operator(self.n)
         
-        _int, _float = self.fmod(n)
+        _int, _float = self.fmod(self.n)
         return self.operator(_int) + self.float_to_bin(_float)          
+
+    def __repr__(self) -> str:
+        return str({
+            "bin": self.bin,
+            "oct": self.oct,
+            "hex": self.hex
+        })
 
 
 if __name__=='__main__':
@@ -78,10 +82,10 @@ if __name__=='__main__':
             elif inp=='c': clear()
             else:
                 float(inp)# check for invalid arguments
-                print('[#]', dec_to_bin(inp))
-                
+                print('[#]', Convert(inp).do(2))
+
         except KeyboardInterrupt:
             break
         except:
-            print('[-] invalid entry.')
+            print('[-] Error.')
 

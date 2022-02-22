@@ -1,7 +1,7 @@
 from kivy.app import App
 from kivy.uix.gridlayout import GridLayout
 from kivy.config import Config
-from logic import dec_to_bin
+from logic import Convert
 import logic
 
 # from iamlaizy import reload_me
@@ -30,11 +30,11 @@ class CalcGridLayout(GridLayout):
                 return
 
             self.ids.deci.text = text
-            for base in logic.ope:
-                logic.base = base
-                res = dec_to_bin(text)
-                out = getattr(self.ids, logic.ope[base].__name__)
-                out.text = res
+            
+            res = Convert(text)
+            for base, type_conv in logic.ope.items():
+                out = getattr(self.ids, type_conv.__name__)
+                out.text = res.do(base)
 
 
 # Creating App class
