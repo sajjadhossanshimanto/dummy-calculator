@@ -2,7 +2,11 @@
 <CustButton@Button>:
     font_size: 32
 
-  
+<CustTextInput@TextInput>:
+    font_size: 25
+    readonly: True
+
+
 # Define id so I can refer to the CalcGridLayout
 # class functions
 # Display points to the entry widget
@@ -17,47 +21,36 @@
  
     # Where input is displayed
     BoxLayout:
-        TextInput:
-            id: entry
+        CustTextInput:
             font_size: 32
+            id: entry
             multiline: False
+            on_focus: focus = False
 
     # where output is displayed
     BoxLayout:
-
         Label:
             text: "decimal"
-        
         Label:
             text: "binary"
-
         Label:
             text: "octa"
-
         Label:
             text: "hexadecimal"
 
     BoxLayout:
 
-        TextInput:
+        CustTextInput:
             id: deci
-            font_size: 20
-            multiline: False
 
-        TextInput:
+        CustTextInput:
             id: bin
-            font_size: 20
-            multiline: False
 
-        TextInput:
+        CustTextInput:
             id: oct
-            font_size: 20
-            multiline: False
 
-        TextInput:
+        CustTextInput:
             id: hex
-            font_size: 20
-            multiline: False
 
 
 
@@ -123,7 +116,6 @@
     # When equals is pressed pass text in the entry
     # to the calculate function
     BoxLayout:
-
         spacing: 10
 
         CustButton:
@@ -148,7 +140,6 @@
             on_press: entry.text += self.text
 
     BoxLayout:
-
         spacing: 10
 
         CustButton:
@@ -156,7 +147,6 @@
             on_press: entry.text += self.text
 
         CustButton:
-            font_size: 20
             text: "Calculate"
             on_press: calculator.calculate(entry.text)
 

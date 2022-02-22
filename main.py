@@ -1,17 +1,14 @@
-from kivy.app import App 
+from kivy.app import App
 from kivy.uix.gridlayout import GridLayout
-from kivy.uix.label import Label
 from kivy.config import Config
 from logic import dec_to_bin
 import logic
 
-from iamlaizy import reload_me
-reload_me('calculator.kv')
+# from iamlaizy import reload_me
+# reload_me('calculator.kv')
 
 # Setting size to resizable
 Config.set('graphics', 'resizable', 1)
-## Config.set('graphics', 'width', '400')
-## Config.set('graphics', 'height', '400')
  
  
 # Creating Layout class
@@ -25,7 +22,11 @@ class CalcGridLayout(GridLayout):
                 # which is pointed at by display
                 text = str(eval(calculation))
             except Exception:
+                
                 self.ids.deci.text = "Error"
+                self.ids.bin.text = ''
+                self.ids.oct.text = ''
+                self.ids.hex.text = ''
                 return
 
             self.ids.deci.text = text

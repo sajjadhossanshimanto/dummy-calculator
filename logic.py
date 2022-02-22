@@ -1,6 +1,6 @@
 import sys
 import os
-from typing import TypeVar
+from typing import TypeVar, Tuple
 
 
 base = 2
@@ -15,17 +15,16 @@ if base not in ope:
     print('[-] wrong base provided.')
     sys.exit()
 
-FloatPart = TypeVar('FloatPart', str)
+FloatPart = TypeVar('FloatPart')# str
 IntPart = TypeVar('IntPart', int, str)
+
 
 def operator(n)-> str:
     return ope[base](int(n))[2:]
 
-
-def positional_mul(number:FloatPart, base:int)-> tuple[IntPart, FloatPart]:
+def positional_mul(number:FloatPart, base:int)-> Tuple[IntPart, FloatPart]:
     # assert isinstance(number, str)
 
-    # number.strip('0')# striped from fmod
     pre_len = len(number)
     number = str(int(number)*base)
     number.rstrip('0')
@@ -34,7 +33,7 @@ def positional_mul(number:FloatPart, base:int)-> tuple[IntPart, FloatPart]:
     start = cur_len-pre_len
     return number[:start] or 0, number[start:] or '0'
 
-def fmod(n:str) -> tuple[IntPart, FloatPart]:
+def fmod(n:str) -> Tuple[IntPart, FloatPart]:
     # assert isinstance(n, float), 'type error'
 
     _int, _, _float = str(n).strip('0').partition('.')
@@ -48,7 +47,7 @@ def float_to_bin(n:FloatPart) -> str:
 
         int_part, n = positional_mul(n, base)
         res+=operator(int_part)
-        if int(n)=='0':
+        if int(n)==0:
             break
 
     return res
