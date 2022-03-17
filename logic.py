@@ -98,7 +98,7 @@ class ToDec(Base):
     def do(self, base: int) -> str:
         self.base = base
 
-        if self.base==10: return self.n
+        if self.base==10: return str(self.n)
         if '.' not in self.n:# non-floating point
             return str(int(self.n, base=base))
         
