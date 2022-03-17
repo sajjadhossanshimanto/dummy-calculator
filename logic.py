@@ -12,15 +12,13 @@ ope = {
 FloatPart = TypeVar('FloatPart')# str
 IntPart = TypeVar('IntPart', int, str)
 
-
-class Convert:
-    def __init__(self, number:str):
+class Base:
+    def __init__(self, number:str, base:int=2):
         self.n = number
-
-        # for self.base, v in ope.items():
-        #     setattr(self, v.__name__, self.do())
+        self.base = base
 
     def operator(self, n)-> str:
+        ''' process the `n` with appropiate built-in function according to the base. '''
         return ope[self.base](int(n))[2:]
 
     def positional_mul(self, number:FloatPart)-> Tuple[IntPart, FloatPart]:
@@ -35,12 +33,21 @@ class Convert:
         return number[:start] or 0, number[start:] or '0'
 
     def fmod(self, n:str) -> Tuple[IntPart, FloatPart]:
+        ''' seperate int and float parts from a number'''
         # assert isinstance(n, float), 'type error'
 
         _int, _, _float = str(n).strip('0').partition('.')
         return _int or 0, _float or '0'
 
-    def float_to_bin(self, n:FloatPart) -> str:
+
+class Convert(Base):
+    # def __init__(self, number:str):
+        # self.n = number
+
+        # for self.base, v in ope.items():
+        #     setattr(self, v.__name__, self.do())
+
+    def float_conversion(self, n:FloatPart) -> str:
         res='.'
         while True:
             if len(res)>=(max_round+1):
@@ -60,7 +67,7 @@ class Convert:
             return self.operator(self.n)
         
         _int, _float = self.fmod(self.n)
-        return self.operator(_int) + self.float_to_bin(_float)          
+        return self.operator(_int) + self.float_conversion(_float)          
 
     def __repr__(self) -> str:
         return str({
