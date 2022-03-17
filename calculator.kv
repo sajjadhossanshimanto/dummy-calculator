@@ -1,6 +1,6 @@
 # Custom button
 <CustButton@Button>:
-    font_size: 32
+    font_size: self.size[-1]//2
 
 <CustTextInput@TextInput>:
     font_size: 25
@@ -29,14 +29,22 @@
 
     # where output is displayed
     BoxLayout:
-        Label:
+        CustButton:
             text: "decimal"
-        Label:
+            color: 1, 1, 1, 1
+            on_press: calculator.select(10)
+
+        CustButton:
             text: "binary"
-        Label:
+            on_press: calculator.select(2)
+
+        CustButton:
             text: "octa"
-        Label:
+            on_press: calculator.select(8)
+
+        CustButton:
             text: "hexadecimal"
+            on_press: calculator.select(16)
 
     BoxLayout:
 
