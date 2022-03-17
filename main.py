@@ -2,7 +2,7 @@ from kivy.app import App
 from kivy.uix.gridlayout import GridLayout
 from kivy.config import Config
 from kivy.properties import NumericProperty
-from logic import Convert
+from logic import FromDec, ToDec
 import logic
 
 from iamlaizy import reload_me

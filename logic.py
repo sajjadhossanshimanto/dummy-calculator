@@ -47,7 +47,7 @@ class Base:
         return self.operator(_int) + self.float_conversion(_float)          
 
 
-class Convert(Base):
+class FromDec(Base):
     # def __init__(self, number:str):
         # self.n = number
 
@@ -55,6 +55,9 @@ class Convert(Base):
         #     setattr(self, v.__name__, self.do())
 
     def float_conversion(self, n:FloatPart) -> str:
+        if any(int(i)>=self.base for i in n):
+            raise ValueError(f'invalid literal ... for base {self.base}')
+        
         res='.'
         while True:
             if len(res)>=(max_round+1):
@@ -67,16 +70,37 @@ class Convert(Base):
 
         return res
 
-    def do(self, base) -> str:
-        self.base = base 
-        return super().do()
-
     def __repr__(self) -> str:
         return str({
             "bin": self.bin,
             "oct": self.oct,
             "hex": self.hex
         })
+
+
+class ToDec(Base):
+    def float_conversion(self, n:FloatPart) -> str:
+        res=0
+        for local_value, num in enumerate(n):
+            local_value+=1
+            num=int(num)
+
+            if num>=self.base:
+                raise ValueError(f'invalid literal ... for base {self.base}')
+
+            res+=num/pow(self.base, local_value)
+
+        return '.'+self.fmod(res)[-1]
+
+    def do(self, base: int) -> str:
+        self.base = base
+
+        if self.base==10: return self.n
+        if '.' not in self.n:# non-floating point
+            return str(int(self.n, base=base))
+        
+        _int, _float = self.fmod(self.n)
+        return str(int(_int, base=base)) + self.float_conversion(_float)
 
 
 if __name__=='__main__':
