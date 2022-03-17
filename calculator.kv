@@ -15,7 +15,7 @@
 
     id: calculator
     display: entry
-    rows: 8
+    rows: 9
     padding: 10
     spacing: 10
  
@@ -31,7 +31,7 @@
     BoxLayout:
         CustButton:
             text: "decimal"
-            color: 1, 1, 1, 1
+            color: 0, 1, 0, 0
             on_press: calculator.select(10)
 
         CustButton:
@@ -63,6 +63,36 @@
 
 
     # When buttons are pressed update the entry
+    BoxLayout:
+        spacing: 10
+
+        CustButton:
+            text: "A"
+            on_press: entry.text += self.text
+
+        CustButton:
+            text: "B"
+            on_press: entry.text += self.text
+
+        CustButton:
+            text: "C"
+            on_press: entry.text += self.text
+
+        CustButton:
+            text: "D"
+            on_press: entry.text += self.text
+
+        CustButton:
+            text: "E"
+            on_press: entry.text += self.text
+
+        CustButton:
+            text: "F"
+            on_press: entry.text += self.text
+
+
+
+
     BoxLayout:
         spacing: 10
 

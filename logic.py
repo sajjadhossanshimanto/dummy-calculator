@@ -86,7 +86,7 @@ class ToDec(Base):
         res=0
         for local_value, num in enumerate(n):
             local_value+=1
-            num=int(num)
+            num=int(num, self.base)# base is required for hex
 
             if num>=self.base:
                 raise ValueError(f'invalid literal ... for base {self.base}')
@@ -118,7 +118,7 @@ if __name__=='__main__':
             elif inp=='c': clear()
             else:
                 float(inp)# check for invalid arguments
-                print('[#]', Convert(inp).do(2))
+                print('[#]', ToDec(inp).do(16))
 
         except KeyboardInterrupt:
             break
