@@ -13,9 +13,9 @@ FloatPart = TypeVar('FloatPart')# str
 IntPart = TypeVar('IntPart', int, str)
 
 class Base:
-    def __init__(self, number:str, base:int=2):
+    def __init__(self, number:str):
         self.n = number
-        self.base = base
+        self.base: int
 
     def operator(self, n)-> str:
         ''' process the `n` with appropiate built-in function according to the base. '''
@@ -39,26 +39,20 @@ class Base:
         _int, _, _float = str(n).strip('0').partition('.')
         return _int or 0, _float or '0'
 
-    def do(self) -> str:
-        if '.' not in self.n:# non-floating point
-            return self.operator(self.n)
-        
-        _int, _float = self.fmod(self.n)
-        return self.operator(_int) + self.float_conversion(_float)          
+    def float_conversion(self, n:FloatPart) -> str:
+        raise NotImplemented('function "float_conversion"')
+
+    def do(self, base: int) -> str:
+        raise NotImplemented('function "do"')
 
 
 class FromDec(Base):
-    # def __init__(self, number:str):
-        # self.n = number
-
-        # for self.base, v in ope.items():
-        #     setattr(self, v.__name__, self.do())
 
     def float_conversion(self, n:FloatPart) -> str:
         if any(int(i)>=self.base for i in n):
-            raise ValueError(f'invalid literal ... for base {self.base}')
+            raise ValueError(f'invalid literal... for base {self.base}')
         
-        res='.'
+        res=''
         while True:
             if len(res)>=(max_round+1):
                 return res+'...'
@@ -69,6 +63,15 @@ class FromDec(Base):
                 break
 
         return res
+
+    def do(self, base: int) -> str:
+        self.base = base
+
+        if '.' not in self.n:# non-floating point
+            return self.operator(self.n)
+        
+        _int, _float = self.fmod(self.n)
+        return f'{self.operator(_int)}.{self.float_conversion(_float)}'
 
     def __repr__(self) -> str:
         return str({
@@ -90,7 +93,7 @@ class ToDec(Base):
 
             res+=num/pow(self.base, local_value)
 
-        return '.'+self.fmod(res)[-1]
+        return self.fmod(res)[-1]
 
     def do(self, base: int) -> str:
         self.base = base
@@ -100,7 +103,7 @@ class ToDec(Base):
             return str(int(self.n, base=base))
         
         _int, _float = self.fmod(self.n)
-        return str(int(_int, base=base)) + self.float_conversion(_float)
+        return f'{int(_int, base)}.{self.float_conversion(_float)}'
 
 
 if __name__=='__main__':
