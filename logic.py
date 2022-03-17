@@ -39,6 +39,13 @@ class Base:
         _int, _, _float = str(n).strip('0').partition('.')
         return _int or 0, _float or '0'
 
+    def do(self) -> str:
+        if '.' not in self.n:# non-floating point
+            return self.operator(self.n)
+        
+        _int, _float = self.fmod(self.n)
+        return self.operator(_int) + self.float_conversion(_float)          
+
 
 class Convert(Base):
     # def __init__(self, number:str):
@@ -62,12 +69,7 @@ class Convert(Base):
 
     def do(self, base) -> str:
         self.base = base 
-
-        if '.' not in self.n:# non-floating point
-            return self.operator(self.n)
-        
-        _int, _float = self.fmod(self.n)
-        return self.operator(_int) + self.float_conversion(_float)          
+        return super().do()
 
     def __repr__(self) -> str:
         return str({
