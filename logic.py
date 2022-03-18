@@ -49,8 +49,8 @@ class Base:
 class FromDec(Base):
 
     def float_conversion(self, n:FloatPart) -> str:
-        if any(int(i)>=self.base for i in n):
-            raise ValueError(f'invalid literal... for base {self.base}')
+        # if any(int(i)>=self.base for i in n):
+        #     raise ValueError(f'invalid literal... for base {self.base}')
         
         res=''
         while True:
@@ -117,7 +117,7 @@ class ToDec(Base):
             raise ValueError('negative floating point are not supported')
 
         _int, _float = self.fmod(self.n)
-        return f'{int(_int, base)}.{self.float_conversion(_float)}'
+        return f'{int(str(_int), base)}.{self.float_conversion(_float)}'
 
 
 if __name__=='__main__':

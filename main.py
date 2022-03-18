@@ -1,10 +1,11 @@
 from kivy.app import App
 from kivy.uix.gridlayout import GridLayout
 from kivy.config import Config
-from kivy.properties import NumericProperty
 from logic import FromDec, ToDec
 import logic
 import re
+import sys
+from traceback import format_exception
 
 
 from iamlaizy import reload_me
@@ -18,6 +19,10 @@ color_write = (1, 1, 1, 1)
 # Creating Layout class
 class CalcGridLayout(GridLayout):
     from_base=10
+
+    def __init__(self, *args, **kwargs):
+        sys.excepthook=self.on_exception
+        super().__init__(*args, **kwargs)
 
     def replace_with_dec(self, calcu:str):
         start = 0
@@ -40,8 +45,9 @@ class CalcGridLayout(GridLayout):
     # Function called when equals is pressed
     def calculate(self, calculation:str):
         if not calculation:
-            return 
-        calculation=self.replace_with_dec(calculation)
+            return
+        if self.from_base!=10:
+            calculation=self.replace_with_dec(calculation)
         
         try:
             # Solve formula and display it in entry
@@ -56,7 +62,7 @@ class CalcGridLayout(GridLayout):
             return
 
         self.ids.deci.text = text
-        
+
         res = FromDec(text)
         for base, type_conv in logic.ope.items():
             out = getattr(self.ids, type_conv.__name__)
@@ -72,13 +78,21 @@ class CalcGridLayout(GridLayout):
             else:
                 btn.color=color_write
 
+    def on_exception(self, etype, value, tb):
+        full_tb=format_exception(etype, value, tb)
+        
+        self.ids.deci.text = "Error"
+        self.ids.bin.text = ''
+        self.ids.oct.text = ''
+        self.ids.hex.text = ''
+
 # Creating App class
 class CalculatorApp(App):
 
     def build(self):
         return CalcGridLayout()
 
-  
+
 # creating object and running it 
 calcApp = CalculatorApp()
 calcApp.run()
