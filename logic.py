@@ -68,8 +68,15 @@ class FromDec(Base):
         self.base = base
 
         if '.' not in self.n:# non-floating point
-            return self.operator(self.n)
-        
+            plus=0
+            if self.n.startswith('-'):
+                plus = 1<<max_round
+            res = self.operator(int(self.n)+plus)
+            return str(res)
+
+        elif self.n.startswith('-'):
+            raise ValueError('negative floating point are not supported')
+            
         _int, _float = self.fmod(self.n)
         return f'{self.operator(_int)}.{self.float_conversion(_float)}'
 
@@ -97,11 +104,18 @@ class ToDec(Base):
 
     def do(self, base: int) -> str:
         self.base = base
+        max_result = pow(base, max_round-1)
 
         if self.base==10: return str(self.n)
         if '.' not in self.n:# non-floating point
-            return str(int(self.n, base=base))
+            res=int(self.n, base)
+            if res>=max_result:
+                res-=max_result*base
+            return str(res)
         
+        elif self.n.startswith('-'):
+            raise ValueError('negative floating point are not supported')
+
         _int, _float = self.fmod(self.n)
         return f'{int(_int, base)}.{self.float_conversion(_float)}'
 
@@ -118,10 +132,10 @@ if __name__=='__main__':
             elif inp=='c': clear()
             else:
                 float(inp)# check for invalid arguments
-                print('[#]', ToDec(inp).do(16))
+                print('[#]', ToDec(inp).do(2))
 
         except KeyboardInterrupt:
             break
-        except:
+        except Exception as e:
             print('[-] Error.')
 
