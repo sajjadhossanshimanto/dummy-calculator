@@ -1,9 +1,13 @@
 # Custom button
 <CustButton@Button>:
-    font_size: self.size[-1]//2
+    text_size: self.size
+    halign: 'center'
+    valign: 'middle'
 
 <CustTextInput@TextInput>:
-    font_size: 25
+    text_size: self.size
+    halign: 'left'
+    valign: 'middle'
     readonly: True
 
 
@@ -27,11 +31,12 @@
             multiline: False
             on_focus: focus = False
 
-    # where output is displayed
+    ## where output is displayed
+    # chose number system
     BoxLayout:
         CustButton:
             text: "decimal"
-            color: 0, 1, 0, 0
+            color: 0, 1, 0, 1
             on_press: calculator.select(10)
 
         CustButton:
@@ -63,6 +68,8 @@
 
 
     # When buttons are pressed update the entry
+    
+    # hex abc..
     BoxLayout:
         spacing: 10
 
@@ -89,8 +96,6 @@
         CustButton:
             text: "F"
             on_press: entry.text += self.text
-
-
 
 
     BoxLayout:
