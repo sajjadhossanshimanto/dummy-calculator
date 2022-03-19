@@ -1,18 +1,20 @@
 from kivy.app import App
 from kivy.uix.gridlayout import GridLayout
 from kivy.config import Config
+from kivy.base import ExceptionHandler, ExceptionManager
 from logic import FromDec, ToDec
 import logic
 import re
 import sys
-from traceback import format_exception
+# from traceback import format_exception
 
 
-from iamlaizy import reload_me
-reload_me('calculator.kv')
+# from iamlaizy import reload_me
+# reload_me('calculator.kv')
 
 # Setting size to resizable
 Config.set('graphics', 'resizable', 1)
+excepthook=None
 
 color_green = (0, 1, 0, 1)
 color_write = (1, 1, 1, 1)
@@ -21,7 +23,8 @@ class CalcGridLayout(GridLayout):
     from_base=10
 
     def __init__(self, *args, **kwargs):
-        sys.excepthook=self.on_exception
+        global excepthook
+        excepthook=self.on_exception
         super().__init__(*args, **kwargs)
 
     def replace_with_dec(self, calcu:str):
@@ -49,17 +52,10 @@ class CalcGridLayout(GridLayout):
         if self.from_base!=10:
             calculation=self.replace_with_dec(calculation)
         
-        try:
-            # Solve formula and display it in entry
-            # which is pointed at by display
-            text = str(eval(calculation))
-        except Exception:
-            
-            self.ids.deci.text = "Error"
-            self.ids.bin.text = ''
-            self.ids.oct.text = ''
-            self.ids.hex.text = ''
-            return
+        # Solve formula and display it in entry
+        # which is pointed at by display
+        text = str(eval(calculation))
+
 
         self.ids.deci.text = text
 
@@ -78,8 +74,8 @@ class CalcGridLayout(GridLayout):
             else:
                 btn.color=color_write
 
-    def on_exception(self, etype, value, tb):
-        full_tb=format_exception(etype, value, tb)
+    def on_exception(self):
+        # full_tb=format_exception(etype, value, tb)
         
         self.ids.deci.text = "Error"
         self.ids.bin.text = ''
@@ -88,10 +84,16 @@ class CalcGridLayout(GridLayout):
 
 # Creating App class
 class CalculatorApp(App):
-
     def build(self):
         return CalcGridLayout()
 
+
+class E(ExceptionHandler):
+    def handle_exception(self, inst):
+        excepthook()
+        return ExceptionManager.PASS
+
+ExceptionManager.add_handler(E())
 
 # creating object and running it 
 calcApp = CalculatorApp()
