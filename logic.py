@@ -3,6 +3,7 @@ from typing import TypeVar, Tuple
 
 
 max_round = 10
+register = 10# bit
 ope = {
     2: bin,
     8: oct,
@@ -70,7 +71,7 @@ class FromDec(Base):
         if '.' not in self.n:# non-floating point
             plus=0
             if self.n.startswith('-'):
-                plus = 1<<max_round
+                plus = 1<<register
             res = self.operator(int(self.n)+plus)
             return str(res)
 
@@ -102,17 +103,24 @@ class ToDec(Base):
 
         return self.fmod(res)[-1]
 
+    @classmethod
+    def fold_nega(self, n:str) -> str:
+        ''' n must be a string of integer'''
+        base = 2
+        max_result = pow(base, register-1)
+
+        if n>=max_result:
+            n-=max_result*base
+        return str(n)
+
     def do(self, base: int) -> str:
         self.base = base
-        max_result = pow(base, max_round-1)
 
         if self.base==10: return str(self.n)
         if '.' not in self.n:# non-floating point
             res=int(self.n, base)
-            if res>=max_result:
-                res-=max_result*base
             return str(res)
-        
+
         elif self.n.startswith('-'):
             raise ValueError('negative floating point are not supported')
 
@@ -124,7 +132,7 @@ if __name__=='__main__':
     def clear():
         os.system('clear')
 
-    clear()
+    # clear()
     while True:
         try:
             inp = input('>>> ')
