@@ -25,13 +25,9 @@ class Base:
     def positional_mul(self, number:FloatPart)-> Tuple[IntPart, FloatPart]:
         # assert isinstance(number, str)
 
-        pre_len = len(number)
-        number = str(int(number)*self.base)
-        number.rstrip('0')
-        cur_len = len(number)
-
-        start = cur_len-pre_len
-        return number[:start] or 0, number[start:] or '0'
+        number = '.'+number
+        number = float(number)*self.base
+        return self.fmod(number)
 
     def fmod(self, n:str) -> Tuple[IntPart, FloatPart]:
         ''' seperate int and float parts from a number'''
@@ -140,7 +136,7 @@ if __name__=='__main__':
             elif inp=='c': clear()
             else:
                 float(inp)# check for invalid arguments
-                print('[#]', ToDec(inp).do(2))
+                print('[#]', FromDec(inp).do(2))
 
         except KeyboardInterrupt:
             break
