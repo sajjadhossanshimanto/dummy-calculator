@@ -1,4 +1,3 @@
-from kivymd.app import MDApp
 from kivy.uix.gridlayout import GridLayout
 from kivy.config import Config
 from kivy.base import ExceptionHandler, ExceptionManager
@@ -6,11 +5,15 @@ from logic import FromDec, ToDec
 import logic
 import re
 import sys
-# from traceback import format_exception
+
+FROZEN = getattr(sys, "frozen", False)
+if not FROZEN:
+    from traceback import format_exception
+    from iamlaizy import reload_me
+    reload_me('calculator.kv')
+from kivymd.app import MDApp
 
 
-# from iamlaizy import reload_me
-# reload_me('calculator.kv')
 
 # Setting size to resizable
 Config.set('graphics', 'resizable', 1)
@@ -90,6 +93,9 @@ class CalculatorApp(MDApp):
 
 class E(ExceptionHandler):
     def handle_exception(self, inst):
+        if not FROZEN:
+            return ExceptionManager.RAISE
+        
         excepthook()
         return ExceptionManager.PASS
 
