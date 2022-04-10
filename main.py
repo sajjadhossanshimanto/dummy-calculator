@@ -1,4 +1,4 @@
-from kivy.app import App
+from kivymd.app import MDApp
 from kivy.uix.gridlayout import GridLayout
 from kivy.config import Config
 from kivy.base import ExceptionHandler, ExceptionManager
@@ -81,8 +81,10 @@ class CalcGridLayout(GridLayout):
         self.ids.hex.text = ''
 
 # Creating App class
-class CalculatorApp(App):
+class CalculatorApp(MDApp):
     def build(self):
+        self.theme_cls.theme_style = "Dark"
+        # self.theme_cls.primary_palette = "BlueGray"
         return CalcGridLayout()
 
 

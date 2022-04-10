@@ -1,6 +1,7 @@
 # Custom button
-<CustButton@Button>:
+<CustButton@MDFillRoundFlatButton>:
     text_size: self.size
+    md_bg_color: .2,.2,.2,1
     halign: 'center'
     valign: 'middle'
 
@@ -19,7 +20,8 @@
 
     id: calculator
     display: entry
-    rows: 9
+    rows: 10
+    columns: 4
     padding: 10
     spacing: 10
  
@@ -97,6 +99,18 @@
             text: "F"
             on_press: entry.text += self.text
 
+        CustButton:
+            text: "Del"
+            on_press: entry.text = entry.text[:-1]
+
+        CustButton:
+            text: "AC"
+            on_press: 
+                entry.text = ""
+                deci.text = ''
+                oct.text = ''
+                bin.text = ''
+                hex.text = ''
 
     BoxLayout:
         spacing: 10
@@ -162,35 +176,18 @@
         spacing: 10
 
         CustButton:
-            text: "AC"
-            on_press: 
-                entry.text = ""
-                deci.text = ''
-                oct.text = ''
-                bin.text = ''
-                hex.text = ''
+            text: "."
+            on_press: entry.text += self.text
 
         CustButton:
             text: "0"
             on_press: entry.text += self.text
 
         CustButton:
-            text: "Del"
-            on_press: entry.text = entry.text[:-1]
+            text: "Calculate"
+            on_press: calculator.calculate(entry.text)
 
         CustButton:
             text: "/"
             on_press: entry.text += self.text
-
-    BoxLayout:
-        spacing: 10
-
-        CustButton:
-            text: "."
-            on_press: entry.text += self.text
-
-        CustButton:
-            text: "Calculate"
-            on_press: calculator.calculate(entry.text)
-
 
