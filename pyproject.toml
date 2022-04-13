@@ -1,11 +1,13 @@
 [tool.poetry]
 name = "kivy-calco"
-version = "0.1.0"
+version = "0.2.1"
 description = ""
 authors = ["shimanto <s.m.sajjadhossanshimanto.c@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "3.8.9"
+kivy = "^2.1.0"
+kivymd = "^0.104.2"
 
 [tool.poetry.dev-dependencies]
 
