@@ -41,14 +41,14 @@ kv = """
 
         # Active line for fill mode
         Color:
-            rgba: self._current_line_color if root.mode == "fill" else (0, 0, 0, 0)
+            rgba: self.border_line_color if root.mode == "fill" else (0, 0, 0, 0)
         Rectangle:
             size: self.width, dp(2)
             pos: self.center_x - (self.width / 2), self.y + (dp(16) if root.mode != "fill" else 0)
 
         # Hint text.
         Color:
-            rgba: self.current_hint_text_color or self._current_line_color
+            rgba: self.current_hint_text_color or self.border_line_color
             
         Rectangle:
             texture: self._hint_lbl.texture
@@ -61,7 +61,7 @@ kv = """
         # "rectangle" mode
         Color:
             rgba:
-                self._current_line_color
+                self.border_line_color
         Line:
             width: dp(1) if root.mode == "rectangle" else dp(0.00001)
             points:
@@ -71,7 +71,8 @@ kv = """
                 self.right + dp(12), self.y,
                 self.x - dp(12), self.y,
                 self.x - dp(12), self.top - self._hint_lbl.texture_size[1] // 2,
-                self.x + root._line_blank_space_left_point, self.top - self._hint_lbl.texture_size[1] // 2
+                self.x + self._hint_lbl.x - dp(5), self.top - self._hint_lbl.texture_size[1] // 2
+                # _line_blank_space_left_point
                 )
 
     # "fill" mode.
@@ -102,7 +103,7 @@ Builder.load_string(kv)
 
 class MyMDTextField(ThemableBehavior, TextInput):
 
-    mode = OptionProperty("line", options=["rectangle", "fill"])
+    mode = OptionProperty("rectangle", options=["rectangle", "fill"])
     """
     Text field mode. Available options are: `'line'`, `'rectangle'`, `'fill'`.
 
@@ -169,23 +170,11 @@ class MyMDTextField(ThemableBehavior, TextInput):
     defaults to `[10, 10, 0, 0]`.
     """
 
-    max_height = NumericProperty(0)
-    """
-    Maximum height of the text box when `multiline = True`.
-
-    :attr:`max_height` is a :class:`~kivy.properties.NumericProperty` and
-    defaults to `0`.
-    """
-
-    _hint_lbl_font_size = NumericProperty("16sp")
-    _line_blank_space_left_point = NumericProperty(0)
     _hint_y = NumericProperty("17dp")
-    _current_line_color = ColorProperty((0, 0, 0, 0))
+    border_line_color = ColorProperty((0, 0, 0, 0))
     
     
-    _current_right_lbl_color = ColorProperty((0, 0, 0, 0))
     _fill_color = ColorProperty((0, 0, 0, 0))
-    _msg_lbl = None
     _hint_lbl = None
     _lbl_icon_right = None
 
@@ -196,7 +185,7 @@ class MyMDTextField(ThemableBehavior, TextInput):
         # Sets default colors.
         self.line_color_normal = self.theme_cls.divider_color
         self.error_color = self.theme_cls.error_color
-        self._current_line_color = self.theme_cls.primary_color
+        self.border_line_color = self.theme_cls.primary_color
 
         self.theme_cls.bind(
             primary_color=self._update_primary_color,
@@ -220,7 +209,6 @@ class MyMDTextField(ThemableBehavior, TextInput):
         # Label object for `hint_text` parameter.
         self._hint_lbl = TextfieldLabel(
             font_style="Subtitle1",
-            # color=,
             halign="left",
             valign="middle",
             field=self
@@ -245,7 +233,6 @@ class MyMDTextField(ThemableBehavior, TextInput):
         if not self.focus: return
 
         animation = Animation(
-            _line_blank_space_left_point=self._hint_lbl.x - dp(5),
             _fill_color=self.fill_color[:-1]
             + [self.fill_color[-1] - 0.1],
             duration=0.2,
