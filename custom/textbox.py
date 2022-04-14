@@ -73,8 +73,8 @@ kv = """
                 )
 
         Color:
-            rgba: root.foreground_color
-        
+            rgba: self.text_color or root.foreground_color
+
     # "fill" mode.
     canvas.after:
         Color:
@@ -192,11 +192,11 @@ class MyMDTextField(ThemableBehavior, TextInput):
             theme_style=self._update_theme_style,
             accent_color=self._update_accent_color,
         )
-        Clock.schedule_once(self.check_text)
+        # Clock.schedule_once(self.check_text)
         Clock.schedule_once(self._set_fill_color)
 
-    def check_text(self, interval):
-        self.set_text(self, self.text)
+    # def check_text(self, interval):
+    #     self.set_text(self, self.text)
 
     def _set_fill_color(self, interval):
         self._fill_color = self.fill_color
@@ -241,11 +241,10 @@ class MyMDTextField(ThemableBehavior, TextInput):
         animation.start(self)
 
 
-    def set_text(self, instance, text):
-        self.text = re.sub("\n", " ", text) if not self.multiline else text
-        self.has_had_text = True
+    # def set_text(self, instance, text):
+    #     self.text = re.sub("\n", " ", text) if not self.multiline else text
 
-        self.on_focus(self, self.focus)
+    #     self.on_focus(self, self.focus)
 
 
     def _update_accent_color(self, *args):
@@ -259,25 +258,3 @@ class MyMDTextField(ThemableBehavior, TextInput):
     def _update_theme_style(self, *args):
         self.line_color_normal = self.theme_cls.divider_color        
 
-
-if __name__=='__main__':
-    KV="""
-    #:import MmyMDTextField t
-    
-    MDScreen:
-        MmyMDTextField:
-            hint_text: "decimal"
-            id: entry
-            mode: "fill"
-            fill_color: [.5]*4
-            pos_hint: {"center_y": .5}
-
-    """
-    from kivymd.app import MDApp
-
-    class Test(MDApp):
-        def build(self):
-            return Builder.load_string(KV)
-
-
-    Test().run()
