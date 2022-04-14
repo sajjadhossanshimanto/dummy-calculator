@@ -53,7 +53,7 @@ kv = """
         Rectangle:
             texture: self._hint_lbl.texture
             size: self._hint_lbl.texture_size
-            pos: self.x + (dp(8) if root.mode == "fill" else 0), self.y + self.height - self._hint_y
+            pos: self.x + dp(15), self.y + self.height - self._hint_y
 
         # "rectangle" mode
         Color:
@@ -63,12 +63,12 @@ kv = """
             width: dp(1) if root.mode == "rectangle" else dp(0.00001)
             points:
                 (
-                self.x + self._hint_lbl.width + dp(5), self.top - self._hint_lbl.texture_size[1] // 2,
-                self.right + dp(12), self.top - self._hint_lbl.texture_size[1] // 2,
-                self.right + dp(12), self.y,
-                self.x - dp(12), self.y,
-                self.x - dp(12), self.top - self._hint_lbl.texture_size[1] // 2,
-                self.x + self._hint_lbl.x - dp(5), self.top - self._hint_lbl.texture_size[1] // 2
+                self.x + self._hint_lbl.width + dp(15), self.top - self._hint_lbl.texture_size[1] // 2,
+                self.right - dp(5), self.top - self._hint_lbl.texture_size[1] // 2,
+                self.right - dp(5), self.y + dp(5),
+                self.x + dp(5), self.y + dp(5),
+                self.x + dp(5), self.top - self._hint_lbl.texture_size[1] // 2,
+                self.x + self._hint_lbl.x + dp(15), self.top - self._hint_lbl.texture_size[1] // 2
                 # _line_blank_space_left_point
                 )
 
@@ -81,7 +81,7 @@ kv = """
             rgba: root._fill_color if root.mode == "fill" else (0, 0, 0, 0)
         RoundedRectangle:
             pos: self.x, self.y
-            size: self.width, self.height + dp(8)
+            size: self.width, self.height
             radius: root.radius
 
     font_name: "Roboto"
