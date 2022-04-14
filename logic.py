@@ -2,6 +2,9 @@ import os
 from typing import TypeVar, Tuple
 
 
+# from iamlaizy import reload_me
+# reload_me()
+
 max_round = 10
 register = 10# bit
 ope = {

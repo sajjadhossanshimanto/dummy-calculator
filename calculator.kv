@@ -1,11 +1,16 @@
+#:import MyMDTextField custom.textbox
+
 # Custom button
-<CustButton@MDFillRoundFlatButton>:
+<CustButton@Button>:
+    
+    # size_hint: root.size[0]*1/4, None
+    # size_hint: 0.025, None
     text_size: self.size
-    md_bg_color: .2,.2,.2,1
+    bg_color: .2,.2,.2,1
     halign: 'center'
     valign: 'middle'
 
-<CustTextInput@TextInput>:
+<CustTextInput@MyMDTextField>:
     text_size: self.size
     halign: 'left'
     valign: 'middle'
@@ -28,44 +33,33 @@
     # Where input is displayed
     BoxLayout:
         CustTextInput:
-            font_size: 32
+            mode:'fill'
             id: entry
-            multiline: False
-            on_focus: focus = False
+            font_size: 32
+            hint_text: 'decimal'
+            fill_color: [.47]*4
+            icon_right: "arrow-down-drop-circle-outline"
 
     ## where output is displayed
     # chose number system
-    BoxLayout:
-        CustButton:
-            text: "decimal"
-            color: 0, 1, 0, 1
-            on_press: calculator.select(10)
-
-        CustButton:
-            text: "binary"
-            on_press: calculator.select(2)
-
-        CustButton:
-            text: "octa"
-            on_press: calculator.select(8)
-
-        CustButton:
-            text: "hexadecimal"
-            on_press: calculator.select(16)
 
     BoxLayout:
 
         CustTextInput:
             id: deci
+            hint_text: 'decimal'
 
         CustTextInput:
             id: bin
+            hint_text: 'binary'
 
         CustTextInput:
             id: oct
+            hint_text: 'octal'
 
         CustTextInput:
             id: hex
+            hint_text: 'hexadecimal'
 
 
 

@@ -10,7 +10,10 @@ FROZEN = getattr(sys, "frozen", False)
 if not FROZEN:
     from traceback import format_exception
     from iamlaizy import reload_me
-    reload_me('calculator.kv')
+
+    hiden_dependencies =['calculator.kv', 'custom']
+    reload_me(*hiden_dependencies)
+
 from kivymd.app import MDApp
 
 
@@ -86,8 +89,9 @@ class CalcGridLayout(GridLayout):
 # Creating App class
 class CalculatorApp(MDApp):
     def build(self):
-        self.theme_cls.theme_style = "Dark"
+        # self.theme_cls.theme_style = "Dark"
         # self.theme_cls.primary_palette = "BlueGray"
+
         return CalcGridLayout()
 
 
