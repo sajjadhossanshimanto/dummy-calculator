@@ -55,9 +55,6 @@ kv = """
             size: self._hint_lbl.texture_size
             pos: self.x + (dp(8) if root.mode == "fill" else 0), self.y + self.height - self._hint_y
 
-        Color:
-            rgba: self.foreground_color
-
         # "rectangle" mode
         Color:
             rgba:
@@ -75,6 +72,9 @@ kv = """
                 # _line_blank_space_left_point
                 )
 
+        Color:
+            rgba: root.foreground_color
+        
     # "fill" mode.
     canvas.after:
         Color:
@@ -85,7 +85,7 @@ kv = """
             radius: root.radius
 
     font_name: "Roboto"
-    foreground_color: self.theme_cls.text_color
+    # foreground_color: self.theme_cls.text_color
     bold: False
     padding:
         0 if root.mode != "fill" else "8dp", \
@@ -93,8 +93,8 @@ kv = """
         0 if root.mode != "fill" and not root.icon_right else ("14dp" if not root.icon_right else self._lbl_icon_right.texture_size[1] + dp(20)), \
         "16dp" if root.mode == "fill" else "10dp"
     multiline: False
-    size_hint_y: None
-    height: self.minimum_height + (dp(8) if root.mode != "fill" else 0)
+    # size_hint_y: None
+    # height: self.minimum_height #+ (dp(8) if root.mode != "fill" else 0)
 
 """
 
