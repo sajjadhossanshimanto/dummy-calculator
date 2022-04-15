@@ -4,26 +4,16 @@
 <CustButton@MDFlatButton>:
     text_color: [1,1,1,1]
     size_hint: root.size[0]*1/4, None
-    # size_hint: 0.025, None
     text_size: self.size
     # markup: True
     # text: f'[b]{self.text}[b]'# future
-    # bg_color: .2,.2,.2,1
-    # halign: 'center'
-    # valign: 'middle'
 
 <CustTextInput@TextBox>:
     text_size: self.size
     text_color: [1,1,1,1]
-    # halign: 'left'
-    # valign: 'middle'
-    # readonly: True
 
 
-# Define id so I can refer to the CalcGridLayout
 # class functions
-# Display points to the entry widget
-
 <CalcGridLayout>:
     md_bg_color: root.color_scheme['background']
     id: calculator
@@ -47,9 +37,8 @@
             icon_right: "arrow-down-drop-circle-outline"
             press_right_icon: root.show_dialog
 
-    ## where output is displayed
-    # chose number system
 
+    ## where output is displayed
     BoxLayout:
         padding: 5
         spacing: 5
@@ -70,8 +59,8 @@
             id: hex
             hint_text: 'hexa'
 
-    # When buttons are pressed update the entry
     
+    # When buttons are pressed update the entry
     # hex abc..
     BoxLayout:
 
@@ -114,6 +103,7 @@
                 bin.text = ''
                 hex.text = ''
 
+    # numbers
     BoxLayout:
         # spacing: 10
 
