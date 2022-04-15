@@ -90,7 +90,7 @@ kv = """
     # "fill" mode.
     canvas.after:
         Color:
-            rgba: root._fill_color if root.mode == "fill" else (0, 0, 0, 0)
+            rgba: root.fill_color if root.mode == "fill" else (0, 0, 0, 0)
         RoundedRectangle:
             pos: self.x, self.y
             size: self.width, self.height
@@ -188,7 +188,7 @@ class TextBox(ThemableBehavior, TextInput):
     border_line_color = ColorProperty((0, 0, 0, 0))
     
     
-    _fill_color = ColorProperty((0, 0, 0, 0))
+    fill_color = ColorProperty((0, 0, 0, 0))
     _hint_lbl = None
     _lbl_icon_right = None
 
@@ -197,19 +197,17 @@ class TextBox(ThemableBehavior, TextInput):
         super().__init__(**kwargs)
         
         # Sets default colors.
-        self.line_color_normal = self.theme_cls.divider_color
-        self.error_color = self.theme_cls.error_color
+        # self.error_color = self.theme_cls.error_color
         self.border_line_color = self.theme_cls.primary_color
 
-        self.theme_cls.bind(
-            primary_color=self._update_primary_color,
-            theme_style=self._update_theme_style,
-            accent_color=self._update_accent_color,
-        )
-        Clock.schedule_once(self._set_fill_color)
+        # self.theme_cls.bind(
+            # primary_color=self._update_primary_color,
+            # accent_color=self._update_accent_color,
+        # )
+    #     Clock.schedule_once(self._set_fill_color)
 
-    def _set_fill_color(self, interval):
-        self._fill_color = self.fill_color
+    # def _set_fill_color(self, interval):
+    #     self.fill_color = self.fill_color
 
     def set_objects_labels(self):
         """Creates labels objects for the parameters
@@ -262,21 +260,19 @@ class TextBox(ThemableBehavior, TextInput):
         if not self.focus: return
 
         animation = Animation(
-            _fill_color=self.fill_color[:-1]
+            fill_color=self.fill_color[:-1]
             + [self.fill_color[-1] - 0.1],
             duration=0.2,
             t="out_quad",
         )
         animation.start(self)
 
-    def _update_accent_color(self, *args):
-        if self.color_mode == "accent":
-            self._update_colors(self.theme_cls.accent_color)
+    # def _update_accent_color(self, *args):
+    #     if self.color_mode == "accent":
+    #         self._update_colors(self.theme_cls.accent_color)
 
-    def _update_primary_color(self, *args):
-        if self.color_mode == "primary":
-            self._update_colors(self.theme_cls.primary_color)
-
-    def _update_theme_style(self, *args):
-        self.line_color_normal = self.theme_cls.divider_color        
+    # def _update_primary_color(self, *args):
+    #     if self.color_mode == "primary":
+    #         self._update_colors(self.theme_cls.primary_color)
+  
 
