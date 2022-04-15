@@ -117,10 +117,7 @@ class TextBox(ThemableBehavior, TextInput):
 
     mode = OptionProperty("rectangle", options=["rectangle", "fill"])
     """
-    Text field mode. Available options are: `'line'`, `'rectangle'`, `'fill'`.
-
-    :attr:`mode` is an :class:`~kivy.properties.OptionProperty`
-    and defaults to `'line'`.
+    Text field mode. Available options are: `'rectangle'`, `'fill'`.
     """
 
 
@@ -128,34 +125,19 @@ class TextBox(ThemableBehavior, TextInput):
     """
     The background color of the fill in rgba format when the ``mode`` parameter
     is "fill".
-
-    :attr:`fill_color` is an :class:`~kivy.properties.ColorProperty`
-    and defaults to `(0, 0, 0, 0)`.
     """
 
 
     current_hint_text_color = ColorProperty(None)
     """
     ``hint_text`` text color.
-
-    :attr:`current_hint_text_color` is an :class:`~kivy.properties.ColorProperty`
-    and defaults to `None`.
     """
 
     icon_right = StringProperty()
-    """
-    Right icon.
-
-    :attr:`icon_right` is an :class:`~kivy.properties.StringProperty`
-    and defaults to `''`.
-    """
 
     icon_right_color = ColorProperty((0, 0, 0, 1))
     """
     Color of right icon in ``rgba`` format.
-
-    :attr:`icon_right_color` is an :class:`~kivy.properties.ColorProperty`
-    and defaults to `(0, 0, 0, 1)`.
     """
 
     press_right_icon = ObjectProperty()
@@ -163,25 +145,16 @@ class TextBox(ThemableBehavior, TextInput):
     text_color = ColorProperty(None)
     """
     Text color in ``rgba`` format.
-
-    :attr:`text_color` is an :class:`~kivy.properties.ColorProperty`
-    and defaults to `None`.
     """
 
     font_size = NumericProperty("16sp")
     """
     Font size of the text in pixels.
-
-    :attr:`font_size` is a :class:`~kivy.properties.NumericProperty` and
-    defaults to `'16sp'`.
     """
 
     radius = ListProperty([10, 10, 0, 0])
     """
     The corner radius for a text field in `fill` mode.
-
-    :attr:`radius` is a :class:`~kivy.properties.ListProperty` and
-    defaults to `[10, 10, 0, 0]`.
     """
 
     _hint_y = NumericProperty("17dp")
@@ -195,23 +168,11 @@ class TextBox(ThemableBehavior, TextInput):
     def __init__(self, **kwargs):
         self.set_objects_labels()
         super().__init__(**kwargs)
-        
-        # Sets default colors.
-        # self.error_color = self.theme_cls.error_color
         self.border_line_color = self.theme_cls.primary_color
-
-        # self.theme_cls.bind(
-            # primary_color=self._update_primary_color,
-            # accent_color=self._update_accent_color,
-        # )
-    #     Clock.schedule_once(self._set_fill_color)
-
-    # def _set_fill_color(self, interval):
-    #     self.fill_color = self.fill_color
 
     def set_objects_labels(self):
         """Creates labels objects for the parameters
-        `helper_text`,`hint_text`, etc."""
+        `right_icon`,`hint_text`, etc."""
 
 
         # Label object for `hint_text` parameter.
@@ -237,13 +198,7 @@ class TextBox(ThemableBehavior, TextInput):
         if self.icon_right and self.press_right_icon and self.collide_point(*touch.pos):
             # icon position based on the KV code for MDTextField
             icon_x = (self.width + self.x) - (self._lbl_icon_right.texture_size[1]) - dp(8)
-            icon_y = self.center[1] - self._lbl_icon_right.texture_size[1] / 2
-
-            # if self.mode == "rectangle":
-            #     icon_y -= dp(4)
-            # elif self.mode != 'fill':
-            #     icon_y += dp(8)
-            icon_y += dp(8)
+            icon_y = self.center[1] - self._lbl_icon_right.texture_size[1] / 2 + dp(8)
 
             # not a complete bounding box test, but should be sufficient
             if touch.pos[0] > icon_x and touch.pos[1] > icon_y:
@@ -251,28 +206,5 @@ class TextBox(ThemableBehavior, TextInput):
 
         return super().on_touch_down(touch)
 
-
     def _refresh_hint_text(self):
         pass# prevent hint text
-
-
-    def on_focus(self, *args):
-        if not self.focus: return
-
-        animation = Animation(
-            fill_color=self.fill_color[:-1]
-            + [self.fill_color[-1] - 0.1],
-            duration=0.2,
-            t="out_quad",
-        )
-        animation.start(self)
-
-    # def _update_accent_color(self, *args):
-    #     if self.color_mode == "accent":
-    #         self._update_colors(self.theme_cls.accent_color)
-
-    # def _update_primary_color(self, *args):
-    #     if self.color_mode == "primary":
-    #         self._update_colors(self.theme_cls.primary_color)
-  
-
