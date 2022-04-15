@@ -158,7 +158,7 @@ class TextBox(ThemableBehavior, TextInput):
     and defaults to `(0, 0, 0, 1)`.
     """
 
-    on_press_right_icon = ObjectProperty()
+    press_right_icon = ObjectProperty()
 
     text_color = ColorProperty(None)
     """
@@ -236,7 +236,7 @@ class TextBox(ThemableBehavior, TextInput):
         self._hint_lbl.text = value
 
     def on_touch_down(self, touch):
-        if self.icon_right and self.collide_point(*touch.pos):
+        if self.icon_right and self.press_right_icon and self.collide_point(*touch.pos):
             # icon position based on the KV code for MDTextField
             icon_x = (self.width + self.x) - (self._lbl_icon_right.texture_size[1]) - dp(8)
             icon_y = self.center[1] - self._lbl_icon_right.texture_size[1] / 2
@@ -249,7 +249,7 @@ class TextBox(ThemableBehavior, TextInput):
 
             # not a complete bounding box test, but should be sufficient
             if touch.pos[0] > icon_x and touch.pos[1] > icon_y:
-                self.on_press_right_icon()
+                self.press_right_icon()
 
         return super().on_touch_down(touch)
 
