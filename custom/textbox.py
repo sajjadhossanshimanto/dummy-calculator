@@ -34,7 +34,7 @@ kv = """
 #:import images_path kivymd.images_path
 
 
-<MyMDTextField>
+<TextBox>
 
     canvas.before:
         Clear
@@ -45,6 +45,19 @@ kv = """
         Rectangle:
             size: self.width, dp(2)
             pos: self.center_x - (self.width / 2), self.y + (dp(16) if root.mode != "fill" else 0)
+
+        # Texture of right Icon.
+        Color:
+            rgba: self.icon_right_color
+        Rectangle:
+            texture: self._lbl_icon_right.texture
+            size: self._lbl_icon_right.texture_size if self.icon_right else (0, 0)
+            pos:
+                (self.width + self.x) - (self._lbl_icon_right.texture_size[1]) - dp(8), \
+                self.center[1] - self._lbl_icon_right.texture_size[1] / 2 + (dp(8) if root.mode != "fill" else 0) \
+                if root.mode != "rectangle" else \
+                self.center[1] - self._lbl_icon_right.texture_size[1] / 2 - dp(4)
+
 
         # Hint text.
         Color:
@@ -101,7 +114,7 @@ kv = """
 Builder.load_string(kv)
 
 
-class MyMDTextField(ThemableBehavior, TextInput):
+class TextBox(ThemableBehavior, TextInput):
 
     mode = OptionProperty("rectangle", options=["rectangle", "fill"])
     """
@@ -192,11 +205,7 @@ class MyMDTextField(ThemableBehavior, TextInput):
             theme_style=self._update_theme_style,
             accent_color=self._update_accent_color,
         )
-        # Clock.schedule_once(self.check_text)
         Clock.schedule_once(self._set_fill_color)
-
-    # def check_text(self, interval):
-    #     self.set_text(self, self.text)
 
     def _set_fill_color(self, interval):
         self._fill_color = self.fill_color
@@ -239,13 +248,6 @@ class MyMDTextField(ThemableBehavior, TextInput):
             t="out_quad",
         )
         animation.start(self)
-
-
-    # def set_text(self, instance, text):
-    #     self.text = re.sub("\n", " ", text) if not self.multiline else text
-
-    #     self.on_focus(self, self.focus)
-
 
     def _update_accent_color(self, *args):
         if self.color_mode == "accent":
