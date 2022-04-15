@@ -7,6 +7,8 @@ from custom.itemlist import ItemConfirm
 import logic
 import re
 import sys
+from kivymd.uix.gridlayout import MDGridLayout
+from kivy.utils import get_color_from_hex
 
 FROZEN = getattr(sys, "frozen", False)
 if not FROZEN:
@@ -24,12 +26,16 @@ from kivymd.app import MDApp
 Config.set('graphics', 'resizable', 1)
 excepthook=None
 
-color_green = (0, 1, 0, 1)
-color_write = (1, 1, 1, 1)
 # Creating Layout class
-class CalcGridLayout(GridLayout):
+class CalcGridLayout(MDGridLayout):
     from_base = 10
     dialog = None
+    color_scheme = {
+        "background": get_color_from_hex('#282F37'),# 91% black
+        "blue": '#263347',
+        'green': '#03C03C',
+        'white': '#ffffff'
+    }
 
     def __init__(self, *args, **kwargs):
         global excepthook
@@ -90,7 +96,6 @@ class CalcGridLayout(GridLayout):
                     ItemConfirm(text="Binary", _tag=2, select=self.item_selector),
                     ItemConfirm(text="Octal", _tag=8, select=self.item_selector),
                     ItemConfirm(text="Hexadecimal", _tag=16, select=self.item_selector),
-                    
                 ]
             )
         self.dialog.open()
@@ -107,7 +112,7 @@ class CalcGridLayout(GridLayout):
 # Creating App class
 class CalculatorApp(MDApp):
     def build(self):
-        # self.theme_cls.theme_style = "Dark"
+        self.theme_cls.theme_style = "Dark"
         # self.theme_cls.primary_palette = "BlueGray"
 
         return CalcGridLayout()
