@@ -1,7 +1,9 @@
 from kivy.uix.gridlayout import GridLayout
+from kivymd.uix.dialog import MDDialog
 from kivy.config import Config
 from kivy.base import ExceptionHandler, ExceptionManager
 from logic import FromDec, ToDec
+from custom.itemlist import ItemConfirm
 import logic
 import re
 import sys
@@ -26,7 +28,8 @@ color_green = (0, 1, 0, 1)
 color_write = (1, 1, 1, 1)
 # Creating Layout class
 class CalcGridLayout(GridLayout):
-    from_base=10
+    from_base = 10
+    dialog = None
 
     def __init__(self, *args, **kwargs):
         global excepthook
@@ -68,15 +71,30 @@ class CalcGridLayout(GridLayout):
             out = getattr(self.ids, type_conv.__name__)
             out.text = res.do(base)
 
-    def select(self, base, order=[10, 2, 8, 16][::-1]):
-        idx=order.index(base)
-        self.from_base = base
+    def item_selector(self, obj, *args):
+        if not self.dialog:
+            return
+        
+        self.from_base = obj._tag
+        self.ids.entry.hint_text = obj.text
 
-        for pos, btn in enumerate(self.children[-2].children):
-            if pos==idx:
-                btn.color=color_green
-            else:
-                btn.color=color_write
+        self.dialog.dismiss()
+
+    def show_dialog(self):
+        if not self.dialog:
+            self.dialog = MDDialog(
+                title="Number system",
+                type="confirmation",
+                items=[
+                    ItemConfirm(text="Decimal", _tag=10, select=self.item_selector),
+                    ItemConfirm(text="Binary", _tag=2, select=self.item_selector),
+                    ItemConfirm(text="Octal", _tag=8, select=self.item_selector),
+                    ItemConfirm(text="Hexadecimal", _tag=16, select=self.item_selector),
+                    
+                ]
+            )
+        self.dialog.open()
+
 
     def on_exception(self):
         # full_tb=format_exception(etype, value, tb)
