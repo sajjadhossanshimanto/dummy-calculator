@@ -54,9 +54,8 @@ kv = """
             size: self._lbl_icon_right.texture_size if self.icon_right else (0, 0)
             pos:
                 (self.width + self.x) - (self._lbl_icon_right.texture_size[1]) - dp(8), \
-                self.center[1] - self._lbl_icon_right.texture_size[1] / 2 + (dp(8) if root.mode != "fill" else 0) \
-                if root.mode != "rectangle" else \
-                self.center[1] - self._lbl_icon_right.texture_size[1] / 2 - dp(4)
+                (self.center[1] - self._lbl_icon_right.texture_size[1] / 2 + dp(8)) # if root.mode == "fill" else\
+                # (self.center[1] - self._lbl_icon_right.texture_size[1] / 2 - dp(4))
 
 
         # Hint text.
@@ -159,6 +158,8 @@ class TextBox(ThemableBehavior, TextInput):
     and defaults to `(0, 0, 0, 1)`.
     """
 
+    on_press_right_icon = ObjectProperty()
+
     text_color = ColorProperty(None)
     """
     Text color in ``rgba`` format.
@@ -233,6 +234,25 @@ class TextBox(ThemableBehavior, TextInput):
 
     def on_hint_text(self, instance, value):
         self._hint_lbl.text = value
+
+    def on_touch_down(self, touch):
+        if self.icon_right and self.collide_point(*touch.pos):
+            # icon position based on the KV code for MDTextField
+            icon_x = (self.width + self.x) - (self._lbl_icon_right.texture_size[1]) - dp(8)
+            icon_y = self.center[1] - self._lbl_icon_right.texture_size[1] / 2
+
+            # if self.mode == "rectangle":
+            #     icon_y -= dp(4)
+            # elif self.mode != 'fill':
+            #     icon_y += dp(8)
+            icon_y += dp(8)
+
+            # not a complete bounding box test, but should be sufficient
+            if touch.pos[0] > icon_x and touch.pos[1] > icon_y:
+                self.on_press_right_icon()
+
+        return super().on_touch_down(touch)
+
 
     def _refresh_hint_text(self):
         pass# prevent hint text
