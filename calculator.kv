@@ -2,7 +2,7 @@
 
 # Custom button
 <CustButton@MDFlatButton>:
-    text_color: [1,1,1,1]
+    text_color: app.color_scheme['white']
     size_hint: root.size[0]*1/4, None
     text_size: self.size
     # markup: True
@@ -10,12 +10,12 @@
 
 <CustTextInput@TextBox>:
     text_size: self.size
-    text_color: [1,1,1,1]
+    text_color: app.color_scheme['white']
 
 
 # class functions
 <CalcGridLayout>:
-    md_bg_color: root.color_scheme['background']
+    md_bg_color: app.color_scheme['background']
     id: calculator
     display: entry
     rows: 10
@@ -32,8 +32,8 @@
             font_size: 32
             hint_text: 'decimal'
             fill_color: [.47]*4
-            icon_right_color: "#ffffff"
-            current_hint_text_color: root.color_scheme['green']
+            icon_right_color: app.color_scheme['white']
+            current_hint_text_color: app.color_scheme['green']
             icon_right: "arrow-down-drop-circle-outline"
             press_right_icon: root.show_dialog
 

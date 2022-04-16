@@ -1,4 +1,3 @@
-from kivy.uix.gridlayout import GridLayout
 from kivymd.uix.dialog import MDDialog
 from kivy.config import Config
 from kivy.base import ExceptionHandler, ExceptionManager
@@ -30,12 +29,6 @@ excepthook=None
 class CalcGridLayout(MDGridLayout):
     from_base = 10
     dialog = None
-    color_scheme = {
-        "background": get_color_from_hex('#282F37'),# 91% black
-        "blue": '#263347',
-        'green': '#03C03C',
-        'white': '#ffffff'
-    }
 
     def __init__(self, *args, **kwargs):
         global excepthook
@@ -111,6 +104,14 @@ class CalcGridLayout(MDGridLayout):
 
 # Creating App class
 class CalculatorApp(MDApp):
+    color_scheme = {
+        "background": get_color_from_hex('#282F37'),# 91% black
+        "blue": '#263347',
+        'green': '#03C03C',
+        'white': [1, 1, 1, 1]
+    }
+    app_name = 'Dummy Calculator'
+
     def build(self):
         self.theme_cls.theme_style = "Dark"
         # self.theme_cls.primary_palette = "BlueGray"
