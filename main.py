@@ -35,7 +35,8 @@ class CalculatorApp(MDApp):
         self.theme_cls.theme_style = "Dark"
         # self.theme_cls.primary_palette = "BlueGray"
 
-        return CalcGridLayout()
+        # return CalcGridLayout()
+        return Builder.load_file('kvs/app.kv')
         #TODO: make a load function
         # return Builder.load_file('kvs/app.kv')
 

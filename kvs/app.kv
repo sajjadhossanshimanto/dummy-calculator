@@ -53,7 +53,9 @@ MDScreen:
         ScreenManager:
 
             MDScreen:
+
                 MDBoxLayout:
+                    # size_hint_y: .1
                     orientation: 'vertical'
 
                     # md_bg_color:'#282F37'
@@ -67,17 +69,17 @@ MDScreen:
                             elevation: 10
                             left_action_items: [['menu', lambda x: nav_drawer.set_state("open")]]
 
-                        Widget:
-
-
-                # MDScreen:
-                    MDBoxLayout:
-
+                        # Widget:
+                    
                         CalcGridLayout:
-                            size_hint_y: .08
+                #     size_hint_y: .9
+
+
+            
 
 
 
+        
         MDNavigationDrawer:
             id: nav_drawer
 
