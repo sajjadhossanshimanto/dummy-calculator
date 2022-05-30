@@ -28,10 +28,10 @@ if not FROZEN:
     # Config.set('graphics', 'height', str(H))
     # Config.set('graphics', 'width', str(W))
 
-
 # Setting size to resizable
 Config.set('graphics', 'resizable', 1)
 excepthook=None
+
 
 # Creating App class
 class CalculatorApp(MDApp):

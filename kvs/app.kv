@@ -2,57 +2,60 @@
 
 
 # Menu item in the DrawerList list.
-<ItemDrawer>:
+<ItemDrawer@OneLineIconListItem>: # OneLineIconListItem
     theme_text_color: "Custom"
     on_release: self.parent.set_color_item(self)
+    text_color: app.color_scheme['white']
 
     IconLeftWidget:
         id: icon
-        icon: root.icon
+        # icon: root.icon
         theme_text_color: "Custom"
         text_color: root.text_color
-
+#
 
 
 
 MDScreen:
-
     MDNavigationLayout:
 
         ScreenManager:
-
             MDScreen:
                 MDBoxLayout:
                     # size_hint_y: .1
                     orientation: 'vertical'
-
-                    # md_bg_color:'#282F37'
                     md_bg_color: app.color_scheme['background']
 
-                    MDBoxLayout:
-                        orientation: 'vertical'
-
+                    #TODO: apply text font, style bold from toolbar to calculator text 
                         #TODO: apply text font, style bold from toolbar to calculator text 
-                        MDToolbar:
-                            size_hint_y: .07
+                    #TODO: apply text font, style bold from toolbar to calculator text 
+                    MDToolbar:
+                        size_hint_y: .07
 
-                            title: "Dummy calculator"
-                            md_bg_color: app.color_scheme['background']
-                                    
-                            elevation: 10
-                            left_action_items: [['menu', lambda x: nav_drawer.set_state("open")]]
+                        title: "Dummy calculator"
+                        md_bg_color: app.color_scheme['background']
+                                
+                        elevation: 10
+                        left_action_items: [['menu', lambda x: nav_drawer.set_state("open")]]
 
-                        # Widget:
-                    
-                        #TODO: create a general screen class with nav bar in build
-                        CalcGridLayout:
-                #     size_hint_y: .9
+                    ScreenManager:
+                        id: display_screen
+                        MDScreen:
+                            name: 'home_screen'
+                            #TODO: create a general screen class with nav bar in build
+                            CalcGridLayout:
+                        MDScreen:
+                            name: 'plot_screen'
+                            #TODO: create a general screen class with nav bar in build
+                            MDLabel:
+                                text: 'screen2'                        
+                        
 
         MDNavigationDrawer:
             id: nav_drawer
 
             MDBoxLayout:
-                id: content_drawer
+                # id: content_drawer
                 
                 orientation: "vertical"
                 padding: "8dp"
@@ -80,7 +83,17 @@ MDScreen:
                     adaptive_height: True
 
                 ScrollView:
-
                     MDList:
-                        id: md_list
+                        # id: md_list
 
+                        OneLineIconListItem:
+                            text: 'home'
+                            on_release: 
+                                nav_drawer.set_state("close")
+                                display_screen.current = 'home_screen'
+                        
+                        OneLineIconListItem:
+                            text: 'plot'
+                            on_release: 
+                                nav_drawer.set_state("close")
+                                display_screen.current = 'plot_screen'
