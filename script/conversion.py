@@ -1,7 +1,7 @@
 from kivymd.uix.dialog import MDDialog
-from logic import FromDec, ToDec
+from script.logic import FromDec, ToDec
 from custom.itemlist import ItemConfirm
-import logic
+import script.logic as logic
 import re
 from kivymd.uix.gridlayout import GridLayout
 from kivy.lang import Builder
