@@ -1,18 +1,6 @@
-from iamlaizy import reload_me
-reload_me()
-
-from kivy.lang import Builder
-
-import re
-import sys
-
-from kivy.animation import Animation
-from kivy.clock import Clock
 from kivy.lang import Builder
 from kivy.metrics import dp, sp
 from kivy.properties import (
-    AliasProperty,
-    BooleanProperty,
     ColorProperty,
     ListProperty,
     NumericProperty,
@@ -20,10 +8,8 @@ from kivy.properties import (
     OptionProperty,
     StringProperty,
 )
-from kivy.uix.label import Label
-from kivy.uix.textinput import TextInput
 
-from kivymd.font_definitions import theme_font_styles
+from kivy.uix.textinput import TextInput
 from kivymd.theming import ThemableBehavior
 from kivymd.uix.label import MDIcon
 from kivymd.uix.textfield import TextfieldLabel

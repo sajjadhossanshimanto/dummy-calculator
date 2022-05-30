@@ -13,37 +13,6 @@
         text_color: root.text_color
 
 
-<ContentNavigationDrawer>:
-    orientation: "vertical"
-    padding: "8dp"
-    spacing: "8dp"
-
-    AnchorLayout:
-        anchor_x: "left"
-        size_hint_y: None
-        height: avatar.height
-
-        Image:
-            id: avatar
-            size_hint: None, None
-            size: "56dp", "56dp"
-            source: "data/logo/kivy-icon-256.png"
-
-    MDLabel:
-        text: "KivyMD library"
-        font_style: "Button"
-        adaptive_height: True
-
-    MDLabel:
-        text: "kivydevelopment@gmail.com"
-        font_style: "Caption"
-        adaptive_height: True
-
-    ScrollView:
-
-        DrawerList:
-            id: md_list
-
 
 
 MDScreen:
@@ -53,7 +22,6 @@ MDScreen:
         ScreenManager:
 
             MDScreen:
-
                 MDBoxLayout:
                     # size_hint_y: .1
                     orientation: 'vertical'
@@ -64,22 +32,22 @@ MDScreen:
                     MDBoxLayout:
                         orientation: 'vertical'
 
+                        #TODO: apply text font, style bold from toolbar to calculator text 
                         MDToolbar:
+                            size_hint_y: .07
+
                             title: "Dummy calculator"
+                            md_bg_color: app.color_scheme['background']
+                                    
                             elevation: 10
                             left_action_items: [['menu', lambda x: nav_drawer.set_state("open")]]
 
                         # Widget:
                     
+                        #TODO: create a general screen class with nav bar in build
                         CalcGridLayout:
                 #     size_hint_y: .9
 
-
-            
-
-
-
-        
         MDNavigationDrawer:
             id: nav_drawer
 
@@ -102,12 +70,12 @@ MDScreen:
                         source: "data/logo/kivy-icon-256.png"
 
                 MDLabel:
-                    text: "KivyMD library"
+                    text: "Dummy Calculator"
                     font_style: "Button"
                     adaptive_height: True
 
                 MDLabel:
-                    text: "kivydevelopment@gmail.com"
+                    text: "s.m.sajjadhossanshimanto.c@gmail.com"
                     font_style: "Caption"
                     adaptive_height: True
 

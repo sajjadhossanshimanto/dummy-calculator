@@ -3,9 +3,17 @@ from kivy.config import Config
 import sys
 from kivy.utils import get_color_from_hex
 from kivy.lang import Builder
+from kivy.core.window import Window
+from kivymd.app import MDApp
+from script.conversion import CalcGridLayout
+from kivy.config import Config
 
+try:
+    import android
+except ImportError:
+    android = None
 
-FROZEN = getattr(sys, "frozen", False)
+FROZEN = getattr(sys, "frozen", False) or android
 if not FROZEN:
     from traceback import format_exception
     from iamlaizy import reload_me
@@ -13,8 +21,12 @@ if not FROZEN:
     hiden_dependencies =['kvs', 'custom']
     reload_me(*hiden_dependencies,  filter_extc=['.kv'])
 
-from kivymd.app import MDApp
-from script.conversion import CalcGridLayout
+    H = 700
+    W = H * (1080/1920)# 1920/1080 ratio
+
+    Window.size = (W, H)
+    # Config.set('graphics', 'height', str(H))
+    # Config.set('graphics', 'width', str(W))
 
 
 # Setting size to resizable
