@@ -26,10 +26,11 @@ class CalcGridLayout(GridLayout):
         numbers = re.finditer(r'\+|\-|\*|\\', calcu)
         for match in numbers:
             num: str = calcu[start: match.start()]
+            num = num or '0'
 
             num = ToDec(num).do(self.from_base)
-            deci_calcu+=num
-            deci_calcu+=match.group()
+            deci_calcu+=num# include number
+            deci_calcu+=match.group()# include sign
 
             start=match.start()+1
         # convert leftovers
