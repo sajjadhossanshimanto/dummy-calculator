@@ -90,10 +90,8 @@ kv = """
         
         "10dp", \
         "16dp" if root.mode != "fill" else "24dp", \
-        10 if root.mode != "fill" and not root.icon_right else ("14dp" if not root.icon_right else self._lbl_icon_right.texture_size[1] + dp(20)), \
+        "10dp" if root.mode != "fill" and not root.icon_right else ("14dp" if not root.icon_right else self._lbl_icon_right.texture_size[1] + dp(20)), \
         "16dp" if root.mode == "fill" else "10dp"
-    # size_hint_y: None
-    # height: self.minimum_height + (dp(8) if root.mode != "fill" else 0)
 
 """
 

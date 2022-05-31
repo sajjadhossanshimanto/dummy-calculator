@@ -1,2 +1,8 @@
-__pycache__
-.vscode
+*
+
+!custom
+!kvs
+!script
+
+!*.py
+!buildozer.spec
