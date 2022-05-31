@@ -49,7 +49,7 @@ class CalcGridLayout(GridLayout):
         # Solve formula and display it in entry
         # which is pointed at by display
         text = str(eval(calculation))
-        self.ids.deci.text = ToDec.fold_nega(float(text))
+        self.ids.deci.text = ToDec.fold_negative(float(text))
 
         res = FromDec(text)
         for base, type_conv in logic.ope.items():

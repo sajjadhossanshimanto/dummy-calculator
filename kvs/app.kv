@@ -49,7 +49,9 @@ MDScreen:
                             name: 'plot_screen'
                             #TODO: create a general screen class with nav bar in build
                             MDLabel:
-                                text: 'screen2'                        
+                                text: 'Comming Soon'
+                                pos_hint: {'x': .4, 'y': .1}
+
         #
 
         MDNavigationDrawer:
@@ -88,13 +90,13 @@ MDScreen:
                         # id: md_list
 
                         OneLineIconListItem:
-                            text: 'home'
+                            text: 'conversion'
                             on_release: 
                                 nav_drawer.set_state("close")
                                 display_screen.current = 'home_screen'
                         
                         OneLineIconListItem:
-                            text: 'plot'
+                            text: 'circuit'
                             on_release: 
                                 nav_drawer.set_state("close")
                                 display_screen.current = 'plot_screen'

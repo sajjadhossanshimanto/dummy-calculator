@@ -2,9 +2,6 @@ import os
 from typing import TypeVar, Tuple
 
 
-# from iamlaizy import reload_me
-# reload_me()
-
 max_round = 10
 register = 10# bit
 ope = {
@@ -103,7 +100,7 @@ class ToDec(Base):
         return self.fmod(res)[-1]
 
     @classmethod
-    def fold_nega(self, n:str) -> str:
+    def fold_negative(self, n:str) -> str:
         ''' n must be a string of integer'''
         base = 2
         max_result = pow(base, register-1)
@@ -128,6 +125,9 @@ class ToDec(Base):
 
 
 if __name__=='__main__':
+    from iamlaizy import reload_me
+    reload_me()
+
     def clear():
         os.system('clear')
 

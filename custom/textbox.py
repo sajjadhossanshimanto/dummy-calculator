@@ -84,13 +84,14 @@ kv = """
 
     font_name: "Roboto"
     bold: False
-    padding:
+    padding: 
+        # peading for the text
         # left, top, right, buttom
-        "20dp", \
+        
+        "10dp", \
         "16dp" if root.mode != "fill" else "24dp", \
-        0 if root.mode != "fill" and not root.icon_right else ("14dp" if not root.icon_right else self._lbl_icon_right.texture_size[1] + dp(20)), \
+        10 if root.mode != "fill" and not root.icon_right else ("14dp" if not root.icon_right else self._lbl_icon_right.texture_size[1] + dp(20)), \
         "16dp" if root.mode == "fill" else "10dp"
-    multiline: False
     # size_hint_y: None
     # height: self.minimum_height + (dp(8) if root.mode != "fill" else 0)
 
