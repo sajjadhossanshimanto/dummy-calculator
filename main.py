@@ -5,13 +5,14 @@ from kivy.utils import get_color_from_hex
 from kivy.lang import Builder
 from kivy.core.window import Window
 from kivymd.app import MDApp
-from script.conversion import CalcGridLayout
 from kivy.config import Config
+from kivymd.uix.dialog import MDDialog 
 
 try:
     import android
 except ImportError:
     android = None
+
 
 FROZEN = getattr(sys, "frozen", False) or android
 if not FROZEN:
@@ -23,14 +24,11 @@ if not FROZEN:
 
     H = 700
     W = H * (1080/1920)# 1920/1080 ratio
-
     Window.size = (W, H)
-    # Config.set('graphics', 'height', str(H))
-    # Config.set('graphics', 'width', str(W))
+
 
 # Setting size to resizable
 Config.set('graphics', 'resizable', 1)
-excepthook=None
 
 
 # Creating App class
@@ -45,12 +43,8 @@ class CalculatorApp(MDApp):
 
     def build(self):
         self.theme_cls.theme_style = "Dark"
-        # self.theme_cls.primary_palette = "BlueGray"
 
-        # return CalcGridLayout()
         return Builder.load_file('kvs/app.kv')
-        #TODO: make a load function
-        # return Builder.load_file('kvs/app.kv')
 
 
 class E(ExceptionHandler):
@@ -58,7 +52,13 @@ class E(ExceptionHandler):
         if not FROZEN:
             return ExceptionManager.RAISE
         
-        excepthook()
+        circle='\n'#\U00002B24'
+        MDDialog(
+            title=inst.__class__.__name__,
+            text="Oops!" + circle + circle.join(inst.args),
+            radius=[20, 7, 20, 7],
+        ).open()
+
         return ExceptionManager.PASS
 
 ExceptionManager.add_handler(E())

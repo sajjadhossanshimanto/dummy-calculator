@@ -15,11 +15,6 @@ class CalcGridLayout(GridLayout):
     from_base = 10
     dialog = None
 
-    def __init__(self, *args, **kwargs):
-        global excepthook
-        excepthook=self.on_exception
-        super().__init__(*args, **kwargs)
-
     def replace_with_dec(self, calcu:str):
         start = 0
         deci_calcu = ''
